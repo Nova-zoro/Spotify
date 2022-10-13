@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name= "viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300;1,500&display=swap" rel="stylesheet">
+    <link rel= "stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <title>Music-Player</title>
+</head>
+<body>
+  <div class="music">
+        <div class="music-container">
+          <h2 id="title">ps5</h2>
+          <h3 id="artist">Salem Ilese</h3>
+          <div class="audio-container">
+            <img src='Music-1.jpg' alt="" id="img">  
+          </div>  
+          <audio src= "Ps5 tomorrow X together.mp3" loop id="audio"></audio>
+          <div class="music-controls">
+            <i class="fas  fa-backward" id="Previous" title="Previous"></i>
+            <i class="fas  fa-play main-button" id="play" title="Play/Pause"></i>
+            <i class="fas  fa-forward" id="forward" title="Forwards"></i>
+          </div>
+        </div>
+    </div>
+<script>
+     const Play         = document.getElementById("play");
+     const Music        = document.getElementById("audio");
+     const Image        = document.getElementById("img");
+     const Forwards     = document.getElementById('forward');
+     const Backswards   = document.getElementById('Previous');
+     const Artist       = document.getElementById('artist');
+     const Title        = document.getElementById('title'); 
+     
+     const songs = [
+      { 
+        title:'Ps5',
+        artist: 'Salem Ilese',
+        img:'Music-1.jpg',
+        song:'Ps5 tomorrow X together.mp3',
+      },
+      {
+        artist:'Sean Paul',
+        title: ' Temperature',
+        img:'Music-2.jpg',
+        song: "Song3.mp3",
+      },
+      {
+        artist:'Billie Ellish',
+        title: 'Mr-SaxoBeat',
+        img:'Music-3.jpg',
+        song: "Song2.mp3",
+      }
+     ]
+     let isPlaying = false;
+
+     const Playin = () =>{
+       Play.addEventListener('click' , ()=>{
+       isPlaying = true;
+       Music.play();
+       Play.classList.replace("fa-play" , "fa-pause");
+       Image.classList.add('anime');
+     })
+    };
+
+    const Pause = () =>{
+      Play.addEventListener('click' , () => {
+      isPlaying  = false;
+      Music.pause();
+      Play.classList.replace('fa-pause','fa-play');
+      Image.classList.remove('anime');
+   } )
+   };
+
+  Play.addEventListener('click' , () => {
+   isPlaying ? Pause() : Playin();   
+}) 
+//In 1st fuction call, 
+   //as the value of call is False so the Playin() gets called music playes .
+   //In 1st function call the value of isPlaying will be picked by the Playing(false) 
+   //therefore the Pause() called and Music stopes!
+
+//Next playes
+let PlayNext = 0;
+const loadSongs  = (song) =>{ 
+
+  Artist.textContent = song.artist;
+  Title.textContent = song.title;
+  Image.src = song.img ;
+  Music.src = song.song;
+  Music.play();
+  Play.classList.replace('fa-play','fa-pause');
+  Image.classList.add('anime');
+} 
+ 
+const nextSong  = ()=>{
+  PlayNext = (PlayNext + 1) % songs.length;
+  loadSongs(songs[PlayNext]);
+  console.log(PlayNext);
+};
+const prevSong  = ()=>{
+  PlayNext = (PlayNext - 1 + songs.length) % songs.length;
+  loadSongs(songs[PlayNext])
+  console.log(PlayNext);
+};
+
+Previous.addEventListener('click' , prevSong);
+Forwards.addEventListener('click' , nextSong);
+</script>
+</body>
+</html>9
